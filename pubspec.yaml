@@ -1,6 +1,6 @@
 name: uaepass
 description: UAE PASS service allows using a mobile device as a secure form of identification. UAE PASS automates and simplifies managing digital identity in mobile devices for users and can be used to - Seamless authentication to various smart services. - Prove Who You are from your phone - Authenticate.
-version: 0.1
+version: 0.1.0
 repository: https://github.com/Alkhajeh/Flutter-UAEPass
 
 environment:
