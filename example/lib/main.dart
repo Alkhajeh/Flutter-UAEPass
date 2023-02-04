@@ -3,7 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:uaepass/uaepass.dart';
 
 void main() {
-  Uaepass.init(env: UaePassEnv.stg, appScheme: 'sign');
+  Uaepass.init(
+    env: UaePassEnv.stg,
+    appScheme: 'sign',
+    clientId: 'sandbox_stage',
+    clientSecret: 'sandbox_stage',
+  );
   runApp(const MyApp());
 }
 
@@ -43,96 +48,96 @@ class _MyAppState extends State<MyApp> {
                 ),
               Text('Default', style: Theme.of(context).textTheme.headlineSmall),
               uaepassButton(
-                lang: Lang.en,
+                lang: UaepassLang.en,
                 type: UaepassButtonType.normal,
                 theme: UaePassButtonTheme.white,
               ),
               uaepassButton(
-                lang: Lang.ar,
+                lang: UaepassLang.ar,
                 type: UaepassButtonType.normal,
                 theme: UaePassButtonTheme.white,
               ),
               uaepassButton(
-                lang: Lang.en,
+                lang: UaepassLang.en,
                 type: UaepassButtonType.normal,
                 theme: UaePassButtonTheme.outline,
               ),
               uaepassButton(
-                lang: Lang.ar,
+                lang: UaepassLang.ar,
                 type: UaepassButtonType.normal,
                 theme: UaePassButtonTheme.outline,
               ),
               uaepassButton(
-                lang: Lang.en,
+                lang: UaepassLang.en,
                 type: UaepassButtonType.normal,
                 theme: UaePassButtonTheme.dark,
               ),
               uaepassButton(
-                lang: Lang.ar,
+                lang: UaepassLang.ar,
                 type: UaepassButtonType.normal,
                 theme: UaePassButtonTheme.dark,
               ),
               const Divider(),
               Text('Pill', style: Theme.of(context).textTheme.headlineSmall),
               uaepassButton(
-                lang: Lang.en,
+                lang: UaepassLang.en,
                 type: UaepassButtonType.pill,
                 theme: UaePassButtonTheme.white,
               ),
               uaepassButton(
-                lang: Lang.ar,
+                lang: UaepassLang.ar,
                 type: UaepassButtonType.pill,
                 theme: UaePassButtonTheme.white,
               ),
               uaepassButton(
-                lang: Lang.en,
+                lang: UaepassLang.en,
                 type: UaepassButtonType.pill,
                 theme: UaePassButtonTheme.outline,
               ),
               uaepassButton(
-                lang: Lang.ar,
+                lang: UaepassLang.ar,
                 type: UaepassButtonType.pill,
                 theme: UaePassButtonTheme.outline,
               ),
               uaepassButton(
-                lang: Lang.en,
+                lang: UaepassLang.en,
                 type: UaepassButtonType.pill,
                 theme: UaePassButtonTheme.dark,
               ),
               uaepassButton(
-                lang: Lang.ar,
+                lang: UaepassLang.ar,
                 type: UaepassButtonType.pill,
                 theme: UaePassButtonTheme.dark,
               ),
               const Divider(),
               Text('Sharp', style: Theme.of(context).textTheme.headlineSmall),
               uaepassButton(
-                lang: Lang.en,
+                lang: UaepassLang.en,
                 type: UaepassButtonType.sharp,
                 theme: UaePassButtonTheme.white,
               ),
               uaepassButton(
-                lang: Lang.ar,
+                lang: UaepassLang.ar,
                 type: UaepassButtonType.sharp,
                 theme: UaePassButtonTheme.white,
               ),
               uaepassButton(
-                lang: Lang.en,
+                lang: UaepassLang.en,
                 type: UaepassButtonType.sharp,
                 theme: UaePassButtonTheme.outline,
               ),
               uaepassButton(
-                lang: Lang.ar,
+                lang: UaepassLang.ar,
                 type: UaepassButtonType.sharp,
                 theme: UaePassButtonTheme.outline,
               ),
               uaepassButton(
-                lang: Lang.en,
+                lang: UaepassLang.en,
                 type: UaepassButtonType.sharp,
                 theme: UaePassButtonTheme.dark,
               ),
               uaepassButton(
-                lang: Lang.ar,
+                lang: UaepassLang.ar,
                 type: UaepassButtonType.sharp,
                 theme: UaePassButtonTheme.dark,
               ),
@@ -149,7 +154,7 @@ class _MyAppState extends State<MyApp> {
   UaepassLoginButton uaepassButton({
     required UaepassButtonType type,
     required UaePassButtonTheme theme,
-    required Lang lang,
+    required UaepassLang lang,
   }) {
     return UaepassLoginButton(
       type: type,

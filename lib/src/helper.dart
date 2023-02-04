@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:url_launcher/url_launcher_string.dart';
 
+import '../uaepass.dart';
 import 'configuration.dart';
 import 'model/uaepass_token.dart';
 import 'model/uaepass_user.dart';
@@ -15,7 +16,6 @@ class UaePassAuthUrl {
 mixin Helper {
   static Future<String> getLoginUrl() async {
     final baseUrl = Configuration.authroizeUrl;
-    const clientId = Configuration.clientId;
     const redirectUrl = Configuration.redirectURL;
     const scope = Configuration.scope;
     const state = 'ShNP22hyl1jUU2RGjTRkpg==';
@@ -36,7 +36,7 @@ mixin Helper {
 
     return '$baseUrl?'
         'redirect_uri=$redirectUrl'
-        '&client_id=$clientId'
+        '&client_id=${Uaepass.instance.clientId}'
         '&state=$state'
         '&response_type=$responseType'
         '&scope=$scope'
@@ -64,8 +64,8 @@ mixin Helper {
       },
       body: {
         'redirect_uri': Configuration.redirectURL,
-        'client_id': Configuration.clientId,
-        'client_secret': Configuration.clientSecret,
+        'client_id': Uaepass.instance.clientId,
+        'client_secret': Uaepass.instance.clientSecret,
         'grant_type': Configuration.grantType,
         'code': code
       },

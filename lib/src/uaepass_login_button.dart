@@ -3,22 +3,12 @@ import 'package:flutter/material.dart';
 import '../uaepass.dart';
 import 'model/uaepass_buttons.dart';
 
-enum UaepassButtonType { normal, pill, sharp }
-
-enum UaePassButtonTheme { outline, white, dark }
-
-extension ParseToString on Enum {
-  String toShortString() {
-    return toString().split('.').last;
-  }
-}
-
 class UaepassLoginButton extends StatelessWidget {
   const UaepassLoginButton({
     Key? key,
     this.height = 50,
     this.onCallback,
-    this.lang = Lang.en,
+    this.lang = UaepassLang.en,
     this.type = UaepassButtonType.normal,
     this.theme = UaePassButtonTheme.outline,
   }) : super(key: key);
@@ -26,7 +16,7 @@ class UaepassLoginButton extends StatelessWidget {
   final VoidCallback? onCallback;
 
   final double height;
-  final Lang lang;
+  final UaepassLang lang;
   final UaepassButtonType type;
   final UaePassButtonTheme theme;
 

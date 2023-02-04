@@ -10,7 +10,7 @@ In your `pubspec.yaml` file within your Flutter Project:
 
 ```yaml
 dependencies:
-  flutter_uaepass: <latest_version>
+  uaepass: <latest_version>
 ```
 
 ### iOS
@@ -59,7 +59,12 @@ import 'package:flutter/material.dart';
 import 'package:uaepass/uaepass.dart';
 
 void main() {
-  Uaepass.init(env: UaePassEnv.stg, appScheme: '{custom App Scheme}');
+  Uaepass.init(
+    env: UaePassEnv.stg,
+    appScheme: '{custom App Scheme}',
+    clientId: 'sandbox_stage',
+    clientSecret: 'sandbox_stage',
+  );
   runApp(
     const MaterialApp(
       home: Material(

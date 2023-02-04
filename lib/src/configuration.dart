@@ -2,8 +2,6 @@
 
 import '../uaepass.dart';
 
-enum UaePassEnv { stg, prod }
-
 class Configuration {
   static const bool app2App = true;
 
@@ -28,8 +26,6 @@ class Configuration {
 
   static const String redirectURL =
       'https://dev-ds.smartdubai.ae/auth/auth-return';
-  static const String clientId = 'sandbox_stage';
-  static const String clientSecret = 'sandbox_stage';
   static const String grantType = 'authorization_code';
   static const String grantTypeTX = 'client_credentials';
   static const String scope = 'urn:uae:digitalid:profile:general';

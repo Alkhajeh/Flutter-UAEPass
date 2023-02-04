@@ -4,6 +4,7 @@ import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 import '../uaepass.dart';
+import 'configuration.dart';
 import 'helper.dart';
 import 'model/uaepass_login_result.dart';
 
@@ -61,7 +62,6 @@ class _UaepassLoginViewState extends State<UaepassLoginView> {
             onWebViewCreated: (controller) async {
               // controller.clearCache();
               webViewController = controller;
-              debugPrint((await controller.getUrl()).toString());
             },
             onLoadStart: (controller, url) async {
               if (Configuration.app2App &&
@@ -73,13 +73,10 @@ class _UaepassLoginViewState extends State<UaepassLoginView> {
               }
             },
             shouldOverrideUrlLoading: (controller, uri) async {
-              debugPrint(uri.request.url.toString());
               final url = uri.request.url.toString();
               if (url.contains('code=')) {
                 final code = Uri.parse(url).queryParameters['code']!;
-                debugPrint('Code: $code');
-                Uaepass.instance.code = code;
-                Navigator.pop(context, UaePassResult.success);
+                Navigator.pop(context, code);
 
                 // controller.onLogingComplete(code);
               } else if (url.contains('cancelled')) {

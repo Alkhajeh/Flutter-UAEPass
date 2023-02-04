@@ -2,16 +2,14 @@
 
 import 'package:flutter/material.dart';
 
-import 'src/configuration.dart';
+import 'src/enums.dart';
 import 'src/helper.dart';
 import 'src/model/uaepass_token.dart';
 import 'src/model/uaepass_user.dart';
 import 'src/uaepass_login_view.dart';
 
-export 'src/configuration.dart';
+export 'src/enums.dart';
 export 'src/uaepass_login_button.dart';
-
-enum Lang { en, ar }
 
 class Uaepass {
   static Uaepass? _instance;
@@ -20,11 +18,15 @@ class Uaepass {
     required this.fullscreen,
     required this.showMessages,
     required this.appScheme,
+    required this.clientId,
+    required this.clientSecret,
   });
 
   static Uaepass init({
     required UaePassEnv env,
     required String appScheme,
+    required String clientId,
+    required String clientSecret,
     bool fullscreen = true,
     bool showMessages = true,
   }) =>
@@ -33,6 +35,8 @@ class Uaepass {
         fullscreen: fullscreen,
         showMessages: showMessages,
         appScheme: appScheme,
+        clientId: clientId,
+        clientSecret: clientSecret,
       );
 
   static Uaepass get instance {
@@ -43,20 +47,33 @@ class Uaepass {
     return _instance!;
   }
 
-  String? code;
-  bool showMessages;
-  UaepassToken? token;
-  UaepassUser? user;
-  bool fullscreen;
-  UaePassEnv env;
-  String appScheme;
+  final UaePassEnv env;
+  final String appScheme;
+  final String clientId;
+  final String clientSecret;
+  final bool showMessages;
+  final bool fullscreen;
+  String? _code;
+  UaepassToken? _token;
+  UaepassUser? _user;
 
+  /// Get authorization code
+  String? get code => _code;
+
+  /// Get user token
+  UaepassToken? get token => _token;
+
+  /// Get user information
+  UaepassUser? get user => _user;
+
+  /// Check if user is logged in
   bool isLoggedIn() {
-    return code != null;
+    return _code != null;
   }
 
+  /// Initiate UAEPass login
   Future<void> login(BuildContext context) async {
-    await Navigator.push(
+    final code = await Navigator.push(
       context,
       MaterialPageRoute(
         builder: (context) => const UaepassLoginView(),
@@ -65,8 +82,11 @@ class Uaepass {
     );
 
     if (code == null) return;
-    token = await Helper.getTokenAsync(code!);
-    if (token == null) return;
-    user = await Helper.getUser(token!.accessToken!);
+    _code = code;
+
+    if (code == null) return;
+    _token = await Helper.getTokenAsync(code!);
+    if (_token == null) return;
+    _user = await Helper.getUser(_token!.accessToken!);
   }
 }
