@@ -1,6 +1,6 @@
 # uaepass
 
-[![Generic badge](https://img.shields.io/badge/platform-android%20|%20ios%20-blue.svg)](https://pub.dev/packages/chewie)
+[![Generic badge](https://img.shields.io/badge/platform-android%20|%20ios%20-blue.svg)](https://pub.dev/packages/uaepass)
 
 ![Default](https://user-images.githubusercontent.com/12137414/216746446-74762242-d43e-4495-84c6-c73c29bf62f3.png)
 
