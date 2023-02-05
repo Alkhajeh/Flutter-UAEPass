@@ -6,7 +6,6 @@ import 'package:url_launcher/url_launcher_string.dart';
 import '../uaepass.dart';
 import 'configuration.dart';
 import 'helper.dart';
-import 'model/uaepass_login_result.dart';
 
 class UaepassLoginView extends StatefulWidget {
   const UaepassLoginView({Key? key}) : super(key: key);
@@ -20,13 +19,13 @@ class _UaepassLoginViewState extends State<UaepassLoginView> {
   String successUrl = '';
   PullToRefreshController? pullToRefreshController;
   double progress = 0;
-  final MethodChannel channel =
-      const MethodChannel('poc.deeplink.flutter.dev/channel1');
+  final MethodChannel channel = const MethodChannel('poc.uaepass/channel');
 
   @override
   void initState() {
     super.initState();
     channel.setMethodCallHandler((MethodCall call) async {
+      // print('==== Call back ====');
       final decoded = Uri.decodeFull(successUrl);
       webViewController?.loadUrl(
         urlRequest: URLRequest(
@@ -60,25 +59,24 @@ class _UaepassLoginViewState extends State<UaepassLoginView> {
               ),
             ),
             onWebViewCreated: (controller) async {
-              // controller.clearCache();
+              controller.clearCache();
               webViewController = controller;
-            },
-            onLoadStart: (controller, url) async {
-              if (Configuration.app2App &&
-                  url.toString().contains('uaepass://')) {
-                final openUrl = Helper.getUaePassOpenUrl(url!);
-                successUrl = openUrl.successUrl;
-
-                await launchUrlString(openUrl.appUrl);
-              }
             },
             shouldOverrideUrlLoading: (controller, uri) async {
               final url = uri.request.url.toString();
+              if (Configuration.app2App && url.contains('uaepass://')) {
+                final openUrl = Helper.getUaePassOpenUrl(uri.request.url!);
+                successUrl = openUrl.successUrl;
+                // print('success: $successUrl');
+                // print('oepnUrl: ${openUrl.appUrl}');
+
+                await launchUrlString(openUrl.appUrl);
+                return NavigationActionPolicy.CANCEL;
+              }
+
               if (url.contains('code=')) {
                 final code = Uri.parse(url).queryParameters['code']!;
                 Navigator.pop(context, code);
-
-                // controller.onLogingComplete(code);
               } else if (url.contains('cancelled')) {
                 if (Uaepass.instance.showMessages) {
                   ScaffoldMessenger.of(context)
@@ -90,7 +88,7 @@ class _UaepassLoginViewState extends State<UaepassLoginView> {
                     );
                 }
 
-                Navigator.pop(context, UaePassResult.canceled);
+                Navigator.pop(context);
               }
               return null;
             },

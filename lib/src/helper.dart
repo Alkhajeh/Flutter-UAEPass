@@ -21,10 +21,12 @@ mixin Helper {
     const state = 'ShNP22hyl1jUU2RGjTRkpg==';
     const responseType = Configuration.responseType;
 
-    var appInstalled = false;
+    var appInstalled = true;
     var acrValues = '';
 
-    if (await canLaunchUrlString(Configuration.uaePassScheme)) {
+    if (await canLaunchUrlString(
+      '${Configuration.uaePassScheme}digitalid-users-ids',
+    )) {
       appInstalled = true;
     }
 

@@ -15,16 +15,14 @@ dependencies:
 
 ### iOS
 
-Add any URL schemes passed to `info.plist`
-
-Example:
+Add the below to `info.plist`
 
 ```xml
 <key>CFBundleURLTypes</key>
 <array>
     <dict>
         <key>CFBundleURLName</key>
-        <string>deeplink.flutter.dev</string>
+        <string>uaepass</string>
         <key>CFBundleURLSchemes</key>
         <array>
             <string>{custom App Scheme}</string>
@@ -38,9 +36,87 @@ Example:
 </array>
 ```
 
+Update `AppDelegate.swift` as per below
+
+```swift
+import UIKit
+import Flutter
+
+@UIApplicationMain
+@objc class AppDelegate: FlutterAppDelegate {
+   private var methodChannel: FlutterMethodChannel?
+
+  override func application(
+    _ application: UIApplication,
+    didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
+  ) -> Bool {
+    let controller = window.rootViewController as! FlutterViewController
+    methodChannel = FlutterMethodChannel(name: "{custom App Scheme}.uaepass/channel", binaryMessenger: controller.binaryMessenger)
+
+    GeneratedPluginRegistrant.register(with: self)
+    return super.application(application, didFinishLaunchingWithOptions: launchOptions)
+  }
+
+   override func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
+      methodChannel?.invokeMethod("didRecieveTranscript", arguments: url.absoluteString)
+      return true
+    }
+}
+```
+
 ### Android
 
-Coming Soon
+Add the below to `AndroidManifest.xml`
+
+```xml
+<intent-filter>
+    <action android:name="android.intent.action.VIEW" />
+    <category android:name="android.intent.category.DEFAULT" />
+    <category android:name="android.intent.category.BROWSABLE" />
+    <data
+        android:scheme="{custom App Scheme}"
+        android:host="uaepass" />
+</intent-filter>
+```
+
+```xml
+<manifest>
+   ...
+    <queries>
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <data android:scheme="https" />
+         </intent>
+        <package android:name="ae.uaepass.mainapp" />
+        <package android:name="ae.uaepass.mainapp.stg" />
+    </queries>
+</manifest>
+```
+
+Update `MainActivity.kt` as per below
+
+```kotlin
+import io.flutter.embedding.android.FlutterActivity
+import android.content.Intent
+import androidx.annotation.NonNull
+import io.flutter.embedding.engine.FlutterEngine
+import io.flutter.plugin.common.MethodChannel
+
+class MainActivity: FlutterActivity() {
+    private val channel = "poc.uaepass/channel1"
+    private var methodChannel: MethodChannel? = null
+
+    override fun configureFlutterEngine(@NonNull flutterEngine: FlutterEngine) {
+        super.configureFlutterEngine(flutterEngine)
+        methodChannel = MethodChannel(flutterEngine.dartExecutor, channel)
+    }
+
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        methodChannel?.invokeMethod("didRecieveTranscript", "")
+    }
+}
+```
 
 ## Use it
 

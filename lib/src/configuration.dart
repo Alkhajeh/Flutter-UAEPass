@@ -19,10 +19,8 @@ class Configuration {
   static String get uaePassScheme =>
       Uaepass.instance.env == UaePassEnv.stg ? 'uaepassstg://' : 'uaepass://';
 
-  static String successScheme =
-      '${Uaepass.instance.appScheme}://uaePassSuccess';
-  static String failScheme =
-      '${Uaepass.instance.appScheme}://uaePasssigningFail';
+  static String successScheme = '${Uaepass.instance.appScheme}://success';
+  static String failScheme = '${Uaepass.instance.appScheme}://failure';
 
   static const String redirectURL =
       'https://dev-ds.smartdubai.ae/auth/auth-return';

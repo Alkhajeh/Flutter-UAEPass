@@ -5,7 +5,7 @@ import 'package:uaepass/uaepass.dart';
 void main() {
   Uaepass.init(
     env: UaePassEnv.stg,
-    appScheme: 'sign',
+    appScheme: 'poc',
     clientId: 'sandbox_stage',
     clientSecret: 'sandbox_stage',
   );
@@ -160,11 +160,8 @@ class _MyAppState extends State<MyApp> {
       type: type,
       theme: theme,
       lang: lang,
-      onCallback: () {
-        if (Uaepass.instance.isLoggedIn()) {
-          setState(() => isLoggedIn = true);
-        }
-      },
+      onCallback: () =>
+          setState(() => isLoggedIn = Uaepass.instance.isLoggedIn()),
     );
   }
 }
