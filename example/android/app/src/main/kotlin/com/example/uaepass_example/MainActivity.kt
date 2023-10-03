@@ -24,7 +24,6 @@ class MainActivity: FlutterActivity() {
 
     override fun onResume() {
         super.onResume()
-        Log.d("ERC","onResume Called")
         methodChannel?.invokeMethod("didRecieveTranscript", "")
     }
 

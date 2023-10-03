@@ -90,16 +90,6 @@ class _UaepassLoginViewState extends State<UaepassLoginView> {
               }
               return null;
             },
-            // onLoadError: (_, uri, code, result) async {
-            //   webViewController?.loadUrl(
-            //     urlRequest: URLRequest(
-            //       url: Uri.parse(
-            //           'https://ids.uaepass.ae/authenticationendpoint/login.do'),
-            //     ),
-            //   );
-            //   // if (code == -10)
-            //   //   print("Error: ERR_UNKNOWN_URL_SCHEME -> invalid Url");
-            // },
           ),
         );
       },
