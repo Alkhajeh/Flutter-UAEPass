@@ -30,8 +30,8 @@ class UaepassLoginButton extends StatelessWidget {
       },
       child: Ink.image(
         image: AssetImage(
-          UaepassButtons.signInButton(lang: lang, theme: theme, type: type),
-        ),
+            UaepassButtons.signInButton(lang: lang, theme: theme, type: type),
+            package: 'uaepass'),
         fit: BoxFit.fitWidth,
         width: height * 5.74,
         height: height,

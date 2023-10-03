@@ -21,7 +21,7 @@ mixin Helper {
     const state = 'ShNP22hyl1jUU2RGjTRkpg==';
     const responseType = Configuration.responseType;
 
-    var appInstalled = true;
+    var appInstalled = false;
     var acrValues = '';
 
     if (await canLaunchUrlString(

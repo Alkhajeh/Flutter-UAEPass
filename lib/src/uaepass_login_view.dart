@@ -19,13 +19,12 @@ class _UaepassLoginViewState extends State<UaepassLoginView> {
   String successUrl = '';
   PullToRefreshController? pullToRefreshController;
   double progress = 0;
-  final MethodChannel channel = const MethodChannel('poc.uaepass/channel');
+  final MethodChannel channel = const MethodChannel('poc.uaepass/channel1');
 
   @override
   void initState() {
     super.initState();
     channel.setMethodCallHandler((MethodCall call) async {
-      // print('==== Call back ====');
       final decoded = Uri.decodeFull(successUrl);
       webViewController?.loadUrl(
         urlRequest: URLRequest(
@@ -87,11 +86,20 @@ class _UaepassLoginViewState extends State<UaepassLoginView> {
                       ),
                     );
                 }
-
                 Navigator.pop(context);
               }
               return null;
             },
+            // onLoadError: (_, uri, code, result) async {
+            //   webViewController?.loadUrl(
+            //     urlRequest: URLRequest(
+            //       url: Uri.parse(
+            //           'https://ids.uaepass.ae/authenticationendpoint/login.do'),
+            //     ),
+            //   );
+            //   // if (code == -10)
+            //   //   print("Error: ERR_UNKNOWN_URL_SCHEME -> invalid Url");
+            // },
           ),
         );
       },
