@@ -20,6 +20,7 @@ class Uaepass {
     required this.appScheme,
     required this.clientId,
     required this.clientSecret,
+    required this.redirectUri,
   });
 
   static Uaepass init({
@@ -27,6 +28,7 @@ class Uaepass {
     required String appScheme,
     required String clientId,
     required String clientSecret,
+    String? redirectUri,
     bool fullscreen = true,
     bool showMessages = true,
   }) =>
@@ -37,6 +39,7 @@ class Uaepass {
         appScheme: appScheme,
         clientId: clientId,
         clientSecret: clientSecret,
+        redirectUri: redirectUri,
       );
 
   static Uaepass get instance {
@@ -56,6 +59,7 @@ class Uaepass {
   String? _code;
   UaepassToken? _token;
   UaepassUser? _user;
+  final String? redirectUri;
 
   /// Get authorization code
   String? get code => _code;
