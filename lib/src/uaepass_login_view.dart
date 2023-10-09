@@ -47,6 +47,7 @@ class _UaepassLoginViewState extends State<UaepassLoginView> {
             backgroundColor: const Color(0xFF55C9B2),
             foregroundColor: Colors.black,
             title: const Text('UAE Pass'),
+            automaticallyImplyLeading: false,
           ),
           body: InAppWebView(
             initialUrlRequest: URLRequest(url: Uri.parse(snapshot.data!)),
