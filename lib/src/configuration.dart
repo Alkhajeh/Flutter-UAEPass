@@ -22,7 +22,7 @@ class Configuration {
   static String successScheme = '${Uaepass.instance.appScheme}://success';
   static String failScheme = '${Uaepass.instance.appScheme}://failure';
 
-  static const String redirectURL =
+  static String redirectURL = Uaepass.instance.redirectUri ??
       'https://dev-ds.smartdubai.ae/auth/auth-return';
   static const String grantType = 'authorization_code';
   static const String grantTypeTX = 'client_credentials';

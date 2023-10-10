@@ -19,13 +19,12 @@ class _UaepassLoginViewState extends State<UaepassLoginView> {
   String successUrl = '';
   PullToRefreshController? pullToRefreshController;
   double progress = 0;
-  final MethodChannel channel = const MethodChannel('poc.uaepass/channel');
+  final MethodChannel channel = const MethodChannel('poc.uaepass/channel1');
 
   @override
   void initState() {
     super.initState();
     channel.setMethodCallHandler((MethodCall call) async {
-      // print('==== Call back ====');
       final decoded = Uri.decodeFull(successUrl);
       webViewController?.loadUrl(
         urlRequest: URLRequest(
@@ -44,54 +43,56 @@ class _UaepassLoginViewState extends State<UaepassLoginView> {
           return const CircularProgressIndicator();
         }
         return Scaffold(
-          appBar: AppBar(
-            backgroundColor: const Color(0xFF55C9B2),
-            foregroundColor: Colors.black,
-            title: const Text('UAE Pass'),
-          ),
-          body: InAppWebView(
-            initialUrlRequest: URLRequest(url: Uri.parse(snapshot.data!)),
-            initialOptions: InAppWebViewGroupOptions(
-              crossPlatform: InAppWebViewOptions(
-                transparentBackground: true,
-                useShouldOverrideUrlLoading: true,
-                supportZoom: false,
+          // appBar: AppBar(
+          //   backgroundColor: const Color(0xFF55C9B2),
+          //   foregroundColor: Colors.black,
+          //   title: const Text('UAE Pass'),
+          //   automaticallyImplyLeading: false,
+          // ),
+          body: SafeArea(
+            child: InAppWebView(
+              initialUrlRequest: URLRequest(url: Uri.parse(snapshot.data!)),
+              initialOptions: InAppWebViewGroupOptions(
+                crossPlatform: InAppWebViewOptions(
+                  transparentBackground: true,
+                  useShouldOverrideUrlLoading: true,
+                  supportZoom: false,
+                ),
               ),
-            ),
-            onWebViewCreated: (controller) async {
-              controller.clearCache();
-              webViewController = controller;
-            },
-            shouldOverrideUrlLoading: (controller, uri) async {
-              final url = uri.request.url.toString();
-              if (Configuration.app2App && url.contains('uaepass://')) {
-                final openUrl = Helper.getUaePassOpenUrl(uri.request.url!);
-                successUrl = openUrl.successUrl;
-                // print('success: $successUrl');
-                // print('oepnUrl: ${openUrl.appUrl}');
+              onWebViewCreated: (controller) async {
+                controller.clearCache();
+                webViewController = controller;
+              },
+              shouldOverrideUrlLoading: (controller, uri) async {
+                final url = uri.request.url.toString();
+                if (Configuration.app2App && url.contains('uaepass://')) {
+                  final openUrl = Helper.getUaePassOpenUrl(uri.request.url!);
+                  successUrl = openUrl.successUrl;
+                  // print('success: $successUrl');
+                  // print('oepnUrl: ${openUrl.appUrl}');
 
-                await launchUrlString(openUrl.appUrl);
-                return NavigationActionPolicy.CANCEL;
-              }
-
-              if (url.contains('code=')) {
-                final code = Uri.parse(url).queryParameters['code']!;
-                Navigator.pop(context, code);
-              } else if (url.contains('cancelled')) {
-                if (Uaepass.instance.showMessages) {
-                  ScaffoldMessenger.of(context)
-                    ..removeCurrentSnackBar()
-                    ..showSnackBar(
-                      const SnackBar(
-                        content: Text('User cancelled login with UAE Pass'),
-                      ),
-                    );
+                  await launchUrlString(openUrl.appUrl);
+                  return NavigationActionPolicy.CANCEL;
                 }
 
-                Navigator.pop(context);
-              }
-              return null;
-            },
+                if (url.contains('code=')) {
+                  final code = Uri.parse(url).queryParameters['code']!;
+                  Navigator.pop(context, code);
+                } else if (url.contains('cancelled')) {
+                  if (Uaepass.instance.showMessages) {
+                    ScaffoldMessenger.of(context)
+                      ..removeCurrentSnackBar()
+                      ..showSnackBar(
+                        const SnackBar(
+                          content: Text('User cancelled login with UAE Pass'),
+                        ),
+                      );
+                  }
+                  Navigator.pop(context);
+                }
+                return null;
+              },
+            ),
           ),
         );
       },

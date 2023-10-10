@@ -2,6 +2,7 @@ package com.example.uaepass_example
 
 import io.flutter.embedding.android.FlutterActivity
 import android.content.Intent
+import android.util.Log
 import androidx.annotation.NonNull
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.MethodChannel
@@ -15,8 +16,15 @@ class MainActivity: FlutterActivity() {
         methodChannel = MethodChannel(flutterEngine.dartExecutor, channel)
     }
 
-    override fun onNewIntent(intent: Intent) {
-        super.onNewIntent(intent)
+//    override fun onNewIntent(intent: Intent) {
+//        super.onNewIntent(intent)
+//        Log.d("ERC","CALLED")
+//        methodChannel?.invokeMethod("didRecieveTranscript", "")
+//    }
+
+    override fun onResume() {
+        super.onResume()
         methodChannel?.invokeMethod("didRecieveTranscript", "")
     }
+
 }
